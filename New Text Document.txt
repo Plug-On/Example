@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/principal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Principal"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Rate (%)"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Time (Years)"
+        android:inputType="numberDecimal"/>
+
+    <Button
+        android:id="@+id/calculateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Calculate"/>
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simple Interest: "
+        android:textSize="18sp"
+        android:paddingTop="10dp"/>
+</LinearLayout>
+----------------------------------------------------------
+
+// MainActivity.kt
+package com.example.simpleinterestcalculator
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val principalEditText = findViewById<EditText>(R.id.principal)
+        val rateEditText = findViewById<EditText>(R.id.rate)
+        val timeEditText = findViewById<EditText>(R.id.time)
+        val calculateButton = findViewById<Button>(R.id.calculateButton)
+        val resultTextView = findViewById<TextView>(R.id.result)
+
+        calculateButton.setOnClickListener {
+            val principal = principalEditText.text.toString().toDoubleOrNull()
+            val rate = rateEditText.text.toString().toDoubleOrNull()
+            val time = timeEditText.text.toString().toDoubleOrNull()
+
+            if (principal != null && rate != null && time != null) {
+                val interest = (principal * rate * time) / 100
+                resultTextView.text = "Simple Interest: $interest"
+            } else {
+                resultTextView.text = "Please enter valid numbers"
+            }
+        }
+    }
+}
+
